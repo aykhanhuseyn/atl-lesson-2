@@ -1,23 +1,69 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+
+const INITIAL_VALUE = [
+  {
+    name: "John",
+    year: 1990,
+  },
+  {
+    name: "Jack",
+    year: 1988,
+  },
+  {
+    name: "James",
+    year: 1999,
+  },
+];
 
 function App() {
+  const [people, setPeople] = useState(INITIAL_VALUE);
+  const [name, setName] = useState("");
+  const [year, setYear] = useState(0);
+
+  const handleAddPerson = (event) => {
+    event.preventDefault();
+    if (name && year) {
+      const newPerson = { name, year };
+      setPeople([...people, newPerson]);
+      setName("");
+      setYear(0);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={(e) => handleAddPerson(e)}>
+        <input
+          type="text"
+          value={name}
+          onChange={(event) => {
+            setName(event.target.value);
+          }}
+        />
+        <input
+          type="text"
+          value={year}
+          onChange={(event) => {
+            const parsed = parseInt(event.target.value.replaceAll(/\D/g, ""));
+
+            if (parsed <= 9999) {
+              setYear(parsed);
+            }
+          }}
+        />
+        <button type="submit">add person</button>
+      </form>
+
+      <ul>
+        {people.map((person, index) => {
+          return (
+            <li>
+              {person.name} - {person.year}
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 }
