@@ -5,3 +5,5 @@ TASK = {
     createTS: number; // Date.now();
     isDone: boolean;
 }
+
+USE FORM VALIDATIONS!!!
