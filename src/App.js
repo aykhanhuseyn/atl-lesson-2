@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { Person } from "./Person";
+import { Header } from "./Header";
+import { MyClass } from "./MyClass";
 import "./App.css";
 
 const INITIAL_VALUE = [
@@ -33,6 +36,17 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
+
+      {year % 2 ? (
+        <MyClass
+          classProp="classPropsIsHere"
+          handleAddPerson={handleAddPerson}
+        />
+      ) : (
+        ""
+      )}
+
       <form onSubmit={(e) => handleAddPerson(e)}>
         <input
           type="text"
@@ -56,11 +70,18 @@ function App() {
       </form>
 
       <ul>
-        {people.map((person, index) => {
+        {people.map((element, index) => {
           return (
-            <li>
-              {person.name} - {person.year}
-            </li>
+            <Person
+              key={index}
+              name={element.name}
+              year={element.year}
+              // timespan Date.now()
+              // since 1 yan 1970
+              // in microseconds
+              malikmammad="malikmammad"
+              pepperPots="pepper"
+            />
           );
         })}
       </ul>
